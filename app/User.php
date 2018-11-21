@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -26,12 +27,30 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function role () {
+    public function role ()
+    {
         return $this->belongsTo(Role::class);
     }
 
     public function photo()
     {
         return $this->belongsTo(Photo::class);
+    }
+
+    public function setPasswordAttribute($password)
+    {
+        if (!empty($password))
+        {
+            $this->attributes['password'] = bcrypt($password);
+        }
+    }
+
+    public function isAdmin()
+    {
+        if ($this->role->id == 1 && $this->is_active == 1)
+        {
+            return true;
+        }
+        return false;
     }
 }

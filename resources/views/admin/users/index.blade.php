@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+    @include ('partials.flash-message-users')
     <h1>Users</h1>
     @if($users)
         <table class="table">
@@ -28,6 +29,16 @@
                         <td>{{ $user->created_at->diffForHumans() }}</td>
                         <td>{{ $user->created_at->diffForHumans() }}</td>
                         <td><a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a></td>
+                        <td>
+                            {!! Form::open([
+                              'method' => 'DELETE',
+                              'action' => ['AdminUsersController@destroy', $user->id]
+                            ]) !!}
+
+                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+
+                            {!! Form::close() !!}
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

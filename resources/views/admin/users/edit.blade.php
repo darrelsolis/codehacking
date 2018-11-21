@@ -45,7 +45,7 @@
                         {!! Form::file('photo_id') !!}
                     </div>
 
-                    {!! Form::submit('Save User', ['class' => 'btn btn-primary']) !!}
+                    {!! Form::submit('Update User', ['class' => 'btn btn-warning']) !!}
 
             {!! Form::close() !!}
         </div>
