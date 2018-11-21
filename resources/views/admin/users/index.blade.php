@@ -7,6 +7,7 @@
             <thead>
                 <tr>
                     <th scope="col">ID</th>
+                    <th scope="col">Photo</th>
                     <th scope="col">Name</th>
                     <th scope="col">E-mail</th>
                     <th scope="col">Role</th>
@@ -19,12 +20,14 @@
                 @foreach($users as $user)
                     <tr>
                         <td>{{ $user->id }}</td>
+                        <td><img height="75" src="{{ $user->photo ? $user->photo->file : '/images/placeholder.png' }}"></td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->role->name }}</td>
                         <td>{{ $user->is_active ? "Active" : "Not Active" }}</td>
                         <td>{{ $user->created_at->diffForHumans() }}</td>
-                        <td>{{ $user->updated_at->diffForHumans() }}</td>
+                        <td>{{ $user->created_at->diffForHumans() }}</td>
+                        <td><a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a></td>
                     </tr>
                 @endforeach
             </tbody>
