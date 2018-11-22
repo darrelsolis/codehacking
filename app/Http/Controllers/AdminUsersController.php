@@ -43,10 +43,9 @@ class AdminUsersController extends Controller
     public function store(UsersCreateRequest $request)
     {
         $input = $this->filterPassword($request);
-        if ($file = $request->file('photo_id')) {
-            $name = time() . $file->getClientOriginalName();
-            $file->move('images', $name);
-            $photo = Photo::create(['file' => $name]);
+        if ($file = $request->file('photo_id'))
+        {
+            $photo = $this->createPhoto($file);
             $input['photo_id'] = $photo->id;
         }
         $user = User::create($input);
@@ -90,10 +89,9 @@ class AdminUsersController extends Controller
     {
         $user = User::findOrFail($id);
         $input = $this->filterPassword($request);
-        if ($file = $request->file('photo_id')) {
-            $name = time() . $file->getClientOriginalName();
-            $file->move('images', $name);
-            $photo = Photo::create(['file' => $name]);
+        if ($file = $request->file('photo_id'))
+        {
+            $photo = $this->createPhoto($file);
             $input['photo_id'] = $photo->id;
         }
         $user->update($input);
@@ -126,6 +124,14 @@ class AdminUsersController extends Controller
             $input = $request->all();
         }
         return $input;
+    }
+
+    public function createPhoto($file)
+    {
+        $name = time() . $file->getClientOriginalName();
+        $file->move('images', $name);
+        $photo = Photo::create(['file' => $name]);
+        return $photo;
     }
 
 }
