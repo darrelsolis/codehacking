@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1>Comments</h1>
+    <h1>Comments - {{ $post->title }}</h1>
     @if ($comments)
         <table class="table">
             <thead>
@@ -20,7 +20,6 @@
                     <td>{{ $comment->body }}</td>
                     <td>{{ $comment->author }}</td>
                     <td>{{ $comment->email }}</td>
-                    <td><a href="{{ route('home.post', $comment->post->id) }}" class="btn btn-primary">View Post</a><td>
                     <td><a href="{{ route('replies.show', $comment->id) }}" class="btn btn-info">View Replies</a><td>
                     <td>
                         @if($comment->is_active == 1)

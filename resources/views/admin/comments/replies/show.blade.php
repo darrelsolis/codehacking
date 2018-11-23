@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1>Comments</h1>
-    @if ($comments)
+    <h1>Replies</h1>
+    @if ($replies)
         <table class="table">
             <thead>
                 <tr>
@@ -14,19 +14,17 @@
             </thead>
 
             <tbody>
-                @foreach($comments as $comment)
+                @foreach($replies as $reply)
                 <tr>
-                    <th>{{ $comment->id }}</th>
-                    <td>{{ $comment->body }}</td>
-                    <td>{{ $comment->author }}</td>
-                    <td>{{ $comment->email }}</td>
-                    <td><a href="{{ route('home.post', $comment->post->id) }}" class="btn btn-primary">View Post</a><td>
-                    <td><a href="{{ route('replies.show', $comment->id) }}" class="btn btn-info">View Replies</a><td>
+                    <th>{{ $reply->id }}</th>
+                    <td>{{ $reply->body }}</td>
+                    <td>{{ $reply->author }}</td>
+                    <td>{{ $reply->email }}</td>
                     <td>
-                        @if($comment->is_active == 1)
+                        @if($reply->is_active == 1)
                             {!! Form::open([
                               'method' => 'PATCH',
-                              'action' => ['PostCommentsController@update', $comment->id]
+                              'action' => ['CommentRepliesController@update', $reply->id]
                             ]) !!}
                               <input type="hidden" name="is_active" value="0">
                               {!! Form::submit('Un-approve', ['class' => 'btn btn-warning']) !!}
@@ -35,7 +33,7 @@
                         @else
                             {!! Form::open([
                               'method' => 'PATCH',
-                              'action' => ['PostCommentsController@update', $comment->id]
+                              'action' => ['CommentRepliesController@update', $reply->id]
                             ]) !!}
                               <input type="hidden" name="is_active" value="1">
                               {!! Form::submit('Approve', ['class' => 'btn btn-success']) !!}
@@ -46,7 +44,7 @@
                     <td>
                         {!! Form::open([
                             'method' => 'DELETE',
-                            'action' => ['PostCommentsController@destroy', $comment->id]
+                            'action' => ['CommentRepliesController@destroy', $reply->id]
                         ]) !!}
 
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}

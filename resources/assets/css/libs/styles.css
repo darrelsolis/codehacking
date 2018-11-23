@@ -3,6 +3,11 @@
     padding: 0px;
 }
 
+.comment-reply {
+    display: none;
+}
+
+
 
 /****************User Profile  *********************/
 .user-row {
